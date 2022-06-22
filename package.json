@@ -1,0 +1,11 @@
+{
+  "name": "chat-app",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:adunny/mern-chat-app.git",
+  "author": "alen <alen.dunn1@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "concurrently": "^7.2.2"
+  }
+}
