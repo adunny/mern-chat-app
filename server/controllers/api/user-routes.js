@@ -1,12 +1,15 @@
 const router = require("express").Router();
 const User = require("../../models/User");
+const { signToken } = require("../../utils/auth");
 
+// get all users
 router.get("/", async (req, res) => {
   const allUsers = await User.find().select("-__v -password");
 
   res.json(allUsers);
 });
 
+// get one user
 router.get("/:id", async ({ params }, res) => {
   try {
     const user = await User.findById(params.id)
@@ -22,15 +25,18 @@ router.get("/:id", async ({ params }, res) => {
   }
 });
 
+// create user
 router.post("/", async ({ body }, res) => {
   try {
     const newUser = await User.create(body);
-    res.json(newUser);
+    const token = signToken(newUser);
+    res.json({ newUser, token });
   } catch (e) {
     res.status(500).json(e);
   }
 });
 
+// delete user
 router.delete("/:id", async ({ params }, res) => {
   try {
     const deletedUser = await User.findByIdAndDelete(params.id);
