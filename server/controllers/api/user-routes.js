@@ -36,6 +36,24 @@ router.post("/", async ({ body }, res) => {
   }
 });
 
+// login
+router.post("/login", async ({ body }, res) => {
+  const user = await User.findOne({ username: body.username });
+  if (!user) {
+    return res.status(400).json({ message: "User not found." });
+  }
+
+  const correctPw = await user.checkPassword(body.password);
+
+  if (!correctPw) {
+    return res.status(400).json({ message: "Incorrect password." });
+  }
+
+  const token = signToken(user);
+
+  res.json({ token, user });
+});
+
 // delete user
 router.delete("/:id", async ({ params }, res) => {
   try {
