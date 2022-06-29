@@ -1,6 +1,6 @@
 const router = require("express").Router();
 const User = require("../../models/User");
-const { signToken } = require("../../utils/auth");
+const { signToken, authMiddleware } = require("../../utils/auth");
 
 // get all users
 router.get("/", async (req, res) => {
@@ -55,7 +55,7 @@ router.post("/login", async ({ body }, res) => {
 });
 
 // delete user
-router.delete("/:id", async ({ params }, res) => {
+router.delete("/:id", authMiddleware, async ({ params }, res) => {
   try {
     const deletedUser = await User.findByIdAndDelete(params.id);
     if (!deletedUser) {
