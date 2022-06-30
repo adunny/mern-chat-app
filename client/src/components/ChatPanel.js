@@ -1,37 +1,32 @@
-import React, { useState } from "react";
-import { Col, Card, Form, InputGroup, Button } from "react-bootstrap";
+import React, { useState, useEffect } from "react";
+import { Col, Card, Form, InputGroup, Button, Spinner } from "react-bootstrap";
+import Api from "../utils/api";
 
 const ChatPanel = () => {
-  const messages = [
-    {
-      username: "guy",
-      messageText: "yo",
-    },
-    {
-      username: "dude",
-      messageText: "sup",
-    },
-    {
-      username: "person",
-      messageText: "fk u",
-    },
-    {
-      username: "idiotmoron",
-      messageText: "ahasdfgasdfag",
-    },
-    {
-      username: "dumbass",
-      messageText: "aaaaaaaaaaaaaaaa",
-    },
-  ];
-
+  const [messages, setMessages] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [form, setForm] = useState("");
+
+  useEffect(() => {
+    const fetchMessages = async () => {
+      try {
+        const response = await Api.getMessages();
+        setMessages(response.data);
+        setLoading(false);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+    fetchMessages();
+  }, []);
 
   return (
     <Col>
       <h3>Chat Panel</h3>
+      {loading && <Spinner animation="border" role="status" />}
       {messages.map((msg) => (
-        <Card>
+        <Card key={msg._id}>
           <Card.Header>{msg.username}:</Card.Header>
           <Card.Body>
             <Card.Text>{msg.messageText}</Card.Text>
