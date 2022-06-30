@@ -13,11 +13,9 @@ const Login = () => {
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
-
-    const { username, password } = formState;
     // TODO: better error handling/validation
     try {
-      const { data } = await Api.postLogin(username, password);
+      const { data } = await Api.postLogin(formState);
       Auth.login(data.token);
       setFormState({ username: "", password: "" });
     } catch (err) {

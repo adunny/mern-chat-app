@@ -5,8 +5,12 @@ class ApiService {
     return axios.get("/api/messages");
   }
 
-  postLogin(username, password) {
-    return axios.post("/api/users/login", { username, password });
+  postLogin(userData) {
+    return axios.post("/api/users/login", userData);
+  }
+
+  postUser(userData) {
+    return axios.post("/api/users", userData);
   }
 }
 
