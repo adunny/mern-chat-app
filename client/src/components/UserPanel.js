@@ -47,7 +47,7 @@ const UserPanel = () => {
       </Modal>
       {/* Online Users */}
       {users.map((user) => (
-        <Card>
+        <Card key={user.username}>
           <Card.Title>{user.username}</Card.Title>
         </Card>
       ))}
