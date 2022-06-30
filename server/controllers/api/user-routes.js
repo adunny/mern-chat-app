@@ -2,6 +2,8 @@ const router = require("express").Router();
 const User = require("../../models/User");
 const { signToken, authMiddleware } = require("../../utils/auth");
 
+//TODO: better error handling/validation on most routes
+
 // get all users
 router.get("/", async (req, res) => {
   const allUsers = await User.find().select("-__v -password");

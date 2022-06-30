@@ -2,6 +2,8 @@ const router = require("express").Router();
 const { User, Message } = require("../../models");
 const { authMiddleware } = require("../../utils/auth");
 
+//TODO: better error handling/validation on most routes
+
 // get all messages
 router.get("/", async (req, res) => {
   const messages = await Message.find();
