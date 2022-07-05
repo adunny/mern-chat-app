@@ -12,7 +12,7 @@ const authMiddleware = (req, res, next) => {
   }
 
   if (!token) {
-    return res.status(400).json({ message: "No token" });
+    return res.status(401).json({ message: "You must be logged in." });
   }
 
   try {

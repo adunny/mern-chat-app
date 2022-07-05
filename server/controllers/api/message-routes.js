@@ -11,11 +11,18 @@ router.get("/", async (req, res) => {
 });
 
 // create message
-router.post("/", authMiddleware, async ({ body }, res) => {
-  const newMessage = await Message.create(body);
+router.post("/", authMiddleware, async ({ user, body }, res) => {
+  if (!body.messageText) {
+    res.status(400).json({ message: "Cannot send an empty message" });
+    return;
+  }
+  const newMessage = await Message.create({
+    username: user,
+    messageText: body.messageText,
+  });
 
   await User.findOneAndUpdate(
-    { username: body.username },
+    { username: user.username },
     { $addToSet: { messages: newMessage._id } },
     { new: true }
   );
