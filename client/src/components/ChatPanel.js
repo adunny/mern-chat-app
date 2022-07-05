@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { Col, Card, Form, InputGroup, Button, Spinner } from "react-bootstrap";
 import Api from "../utils/api";
+import Auth from "../utils/auth";
 
 const ChatPanel = () => {
   const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(true);
   const [form, setForm] = useState("");
+
+  const loggedIn = Auth.loggedIn();
 
   useEffect(() => {
     const fetchMessages = async () => {
@@ -21,6 +24,25 @@ const ChatPanel = () => {
     fetchMessages();
   }, []);
 
+  const handleMessageSubmit = async (e) => {
+    e.preventDefault();
+
+    if (loggedIn) {
+      const token = Auth.getToken();
+      const { username } = Auth.getUserInfo();
+      try {
+        const response = await Api.postMessage(username, form, token);
+        if (response.statusText !== "OK") {
+          throw new Error("Something went wrong..");
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    } else {
+      alert("You must be logged in to send a message");
+    }
+  };
+
   return (
     <Col>
       <h3>Chat Panel</h3>
@@ -33,7 +55,7 @@ const ChatPanel = () => {
           </Card.Body>
         </Card>
       ))}
-      <Form>
+      <Form onSubmit={handleMessageSubmit}>
         <InputGroup>
           <Form.Control
             as="textarea"
@@ -41,7 +63,7 @@ const ChatPanel = () => {
             value={form}
             onChange={(e) => setForm(e.target.value)}
           />
-          <Button>Send</Button>
+          <Button type="submit">Send</Button>
         </InputGroup>
       </Form>
     </Col>

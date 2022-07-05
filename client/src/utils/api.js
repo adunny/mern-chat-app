@@ -12,6 +12,18 @@ class ApiService {
   postUser(userData) {
     return axios.post("/api/users", userData);
   }
+
+  postMessage(username, message, token) {
+    return axios.post(
+      "/api/messages",
+      { username, messageText: message },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+  }
 }
 
 export default new ApiService();
