@@ -17,7 +17,7 @@ router.post("/", authMiddleware, async ({ user, body }, res) => {
     return;
   }
   const newMessage = await Message.create({
-    username: user,
+    username: user.username,
     messageText: body.messageText,
   });
 
