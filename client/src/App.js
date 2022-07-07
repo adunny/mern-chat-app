@@ -1,11 +1,11 @@
 import React from "react";
 import Home from "./pages/Home";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { SocketProvider } from "./context/SocketProvider";
+import { SocketProvider, socket } from "./context/SocketProvider";
 
 function App() {
   return (
-    <SocketProvider>
+    <SocketProvider value={socket}>
       <Home />
     </SocketProvider>
   );
