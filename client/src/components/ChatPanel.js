@@ -1,14 +1,23 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Col, Card, Form, InputGroup, Button, Spinner } from "react-bootstrap";
 import Api from "../utils/api";
 import Auth from "../utils/auth";
+import SocketContext from "./../context/SocketProvider";
 
 const ChatPanel = () => {
   const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(true);
   const [form, setForm] = useState("");
 
+  const socket = useContext(SocketContext);
+
   const loggedIn = Auth.loggedIn();
+
+  useEffect(() => {
+    socket.on("received_message", (newMsg) => {
+      setMessages([...messages, newMsg]);
+    });
+  });
 
   useEffect(() => {
     const fetchMessages = async () => {
@@ -22,7 +31,9 @@ const ChatPanel = () => {
     };
 
     fetchMessages();
-  }, []);
+
+    socket.emit("join_chatroom", "public_chat");
+  }, [socket]);
 
   const handleMessageSubmit = async (e) => {
     e.preventDefault();
@@ -33,9 +44,13 @@ const ChatPanel = () => {
       const { username } = Auth.getUserInfo();
       try {
         const response = await Api.postMessage(username, form, token);
+        console.log(response.data);
         if (response.statusText !== "OK") {
           throw new Error("Something went wrong..");
         }
+        socket.emit("new_message", response.data);
+        setMessages([...messages, response.data]);
+        setForm("");
       } catch (err) {
         console.log(err);
       }

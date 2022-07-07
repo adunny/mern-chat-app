@@ -22,8 +22,20 @@ const io = new Server(server, {
   },
 });
 
+// TODO: move this stuff to a seperate file possibly
 io.on("connection", (socket) => {
   console.log(`User ID connected: ${socket.id}`);
+
+  socket.on("join_chatroom", (room) => {
+    socket.join("public_chat");
+    console.log(`A user has joined the room: ${room}`);
+  });
+
+  socket.on("new_message", (message) => {
+    console.log(message);
+
+    socket.in("public_chat").emit("received_message", message);
+  });
 });
 
 // mongodb connection
