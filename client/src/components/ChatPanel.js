@@ -27,6 +27,7 @@ const ChatPanel = () => {
   const handleMessageSubmit = async (e) => {
     e.preventDefault();
 
+    // TODO: change alert to a modal, maybe make a state variable for user info?
     if (loggedIn) {
       const token = Auth.getToken();
       const { username } = Auth.getUserInfo();
@@ -39,6 +40,7 @@ const ChatPanel = () => {
         console.log(err);
       }
     } else {
+      // possibly open login/signup modal (useContext) instead alerting an error message?
       alert("You must be logged in to send a message");
     }
   };
