@@ -8,6 +8,7 @@ const { Server } = require("socket.io");
 const app = express();
 const server = http.createServer(app);
 const PORT = process.env.port || 3001;
+const { checkUserArray } = require("./utils/checkUserArray");
 
 // middleware
 app.use(express.urlencoded({ extended: false }));
@@ -23,12 +24,25 @@ const io = new Server(server, {
 });
 
 // TODO: move this stuff to a seperate file possibly
+const onlineUsers = [];
 io.on("connection", (socket) => {
-  console.log(`User ID connected: ${socket.id}`);
+  socket.emit("online_users", onlineUsers);
+  socket.join("public_chat");
+  console.log(`A user has joined the chat`);
 
-  socket.on("join_chatroom", (room) => {
-    socket.join("public_chat");
-    console.log(`A user has joined the room: ${room}`);
+  socket.on("user_connected", (user) => {
+    const userExists = checkUserArray(user, onlineUsers);
+    if (!userExists) {
+      onlineUsers.push({ user, id: socket.id });
+    }
+    console.log(onlineUsers);
+    socket.in("public_chat").emit("online_users", onlineUsers);
+    socket.emit("online_users", onlineUsers);
+    console.log(`${user} is now online.`);
+  });
+
+  socket.on("user_disconnected", (user) => {
+    console.log(`${user} is now offline.`);
   });
 
   socket.on("new_message", (message) => {
