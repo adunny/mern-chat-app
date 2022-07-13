@@ -2,6 +2,10 @@
   "name": "chat-app",
   "version": "1.0.0",
   "main": "index.js",
+  "scripts": {
+    "install": "concurrently \"cd server && yarn install\" \"cd client && yarn install\"",
+    "dev": "concurrently \"cd server && yarn start\" \"cd client && yarn start\""
+  },
   "repository": "git@github.com:adunny/mern-chat-app.git",
   "author": "alen <alen.dunn1@gmail.com>",
   "license": "MIT",
