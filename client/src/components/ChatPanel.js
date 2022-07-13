@@ -1,15 +1,13 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect } from "react";
 import { Col, Card, Form, InputGroup, Button, Spinner } from "react-bootstrap";
 import Api from "../utils/api";
 import Auth from "../utils/auth";
-import SocketContext from "./../context/SocketProvider";
+import { socket } from "../utils/socketConnection";
 
 const ChatPanel = () => {
   const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(true);
   const [form, setForm] = useState("");
-
-  const socket = useContext(SocketContext);
 
   const loggedIn = Auth.loggedIn();
 
@@ -31,9 +29,7 @@ const ChatPanel = () => {
     };
 
     fetchMessages();
-
-    socket.emit("join_chatroom", "public_chat");
-  }, [socket]);
+  }, []);
 
   const handleMessageSubmit = async (e) => {
     e.preventDefault();
