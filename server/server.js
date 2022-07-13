@@ -31,8 +31,9 @@ io.on("connection", (socket) => {
 
   socket.on("user_connected", (user) => {
     const userExists = checkUserArray(user, onlineUsers);
-    !userExists && onlineUsers.push({ user, id: socket.id });
-
+    if (!userExists) {
+      onlineUsers.push({ user, id: socket.id });
+    }
     socket.in("public_chat").emit("online_users", onlineUsers);
     socket.emit("online_users", onlineUsers);
     console.log(`${user} is now online.`);
@@ -41,14 +42,14 @@ io.on("connection", (socket) => {
   socket.on("user_disconnected", (user) => {
     const userExists = checkUserArray(user, onlineUsers);
     // finds the user that disconnected and removes them from the array
-    userExists &&
+    if (userExists) {
       onlineUsers.splice(
-        onlineUsers.indexOf((obj) => obj.name === user),
+        onlineUsers.findIndex((x) => x.user == user),
         1
       );
+    }
     socket.emit("online_users", onlineUsers);
     socket.in("public_chat").emit("online_users", onlineUsers);
-    socket.emit("user_disconnected", onlineUsers);
     console.log(`${user} is now offline.`);
   });
 

@@ -24,9 +24,6 @@ const UserPanel = () => {
   const logOutHandler = () => {
     const { data } = Auth.getUserInfo();
     socket.emit("user_disconnected", data.username);
-    socket.on("user_disconnected", (onlineUsers) => {
-      setUsers(onlineUsers);
-    });
     Auth.logout();
   };
 
