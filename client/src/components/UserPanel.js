@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Col, Card, Button, Modal, Container, Row } from "react-bootstrap";
-import Login from "./authentication/Login";
-import Signup from "./authentication/Signup";
+import { Col, Card, Button } from "react-bootstrap";
 import Auth from "../utils/auth";
 import { socket } from "../utils/socketConnection";
 
@@ -27,34 +25,10 @@ const UserPanel = () => {
     Auth.logout();
   };
 
-  const [modal, setModal] = useState(false);
-
   return (
     <Col>
       <h3>Userpanel</h3>
-      {Auth.loggedIn() ? (
-        <Button onClick={logOutHandler}>Logout</Button>
-      ) : (
-        <Button onClick={() => setModal(true)}>Login/Signup</Button>
-      )}
-
-      {/* Login/Signup Modal */}
-      <Modal size="lg" centered show={modal} onHide={() => setModal(false)}>
-        <Modal.Body>
-          <Container>
-            <Row>
-              <Col>
-                <h2>Sign in</h2>
-                <Login />
-              </Col>
-              <Col>
-                <h2>Create an Account</h2>
-                <Signup />
-              </Col>
-            </Row>
-          </Container>
-        </Modal.Body>
-      </Modal>
+      {Auth.loggedIn() && <Button onClick={logOutHandler}>Logout</Button>}
       {/* User List */}
       <h4>Online users</h4>
       {users.length ? (
