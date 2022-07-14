@@ -28,6 +28,7 @@ const onlineUsers = [];
 io.on("connection", (socket) => {
   socket.emit("online_users", onlineUsers);
   socket.join("public_chat");
+  console.log(onlineUsers);
 
   socket.on("user_connected", (user) => {
     const userExists = checkUserArray(user, onlineUsers);

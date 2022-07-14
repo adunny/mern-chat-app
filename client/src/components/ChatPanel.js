@@ -5,6 +5,8 @@ import Auth from "../utils/auth";
 import { socket } from "../utils/socketConnection";
 
 const ChatPanel = () => {
+  // TODO: Add scrolling functionality to chat messages
+
   const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(true);
   const [form, setForm] = useState("");
@@ -51,7 +53,6 @@ const ChatPanel = () => {
         console.log(err);
       }
     } else {
-      // possibly open login/signup modal (useContext) instead alerting an error message?
       alert("You must be logged in to send a message");
     }
   };

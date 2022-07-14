@@ -8,6 +8,7 @@ import Auth from "../utils/auth";
 import { Row, Container, Col, Card, Accordion } from "react-bootstrap";
 
 const Home = () => {
+  // TODO: Mobile Responsiveness in pretty much all components
   return (
     <Container className="mt-5 pt-5">
       {!Auth.loggedIn() ? (
