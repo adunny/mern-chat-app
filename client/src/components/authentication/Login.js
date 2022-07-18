@@ -46,7 +46,9 @@ const Login = () => {
           value={formState.password}
         />
       </Form.Group>
-      <Button type="submit">Login</Button>
+      <Button className="btn-secondary" type="submit">
+        Login
+      </Button>
     </Form>
   );
 };

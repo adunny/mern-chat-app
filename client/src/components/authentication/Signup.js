@@ -59,7 +59,9 @@ const Signup = () => {
           value={formState.password}
         />
       </Form.Group>
-      <Button type="submit">Signup</Button>
+      <Button className="btn-secondary" type="submit">
+        Signup
+      </Button>
     </Form>
   );
 };
