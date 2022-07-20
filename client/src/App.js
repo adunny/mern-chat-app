@@ -15,8 +15,8 @@ function App() {
             <Col className="my-3 mb-5 px-5">
               <Card className="card-bg">
                 <Card.Body className="text-center">
-                  <Card.Title>Welcome</Card.Title>
-                  <Card.Text>lorem ipsum fuck u</Card.Text>
+                  <Card.Title>Welcome to GlobalChat!</Card.Title>
+                  <Card.Text>Please Login or Sign up to continue</Card.Text>
                 </Card.Body>
               </Card>
             </Col>
