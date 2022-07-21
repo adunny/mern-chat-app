@@ -1,6 +1,7 @@
 const router = require("express").Router();
 const User = require("../../models/User");
 const { signToken, authMiddleware } = require("../../utils/auth");
+const sendEmail = require("../../utils/sendEmail");
 
 //TODO: better error handling/validation on most routes
 
@@ -32,8 +33,13 @@ router.post("/", async ({ body }, res) => {
   try {
     const newUser = await User.create(body);
     const token = signToken(newUser);
+
+    const emailResponse = await sendEmail(body);
+
+    console.log(emailResponse);
     res.json({ newUser, token });
   } catch (e) {
+    console.log(e);
     res.status(500).json(e);
   }
 });
