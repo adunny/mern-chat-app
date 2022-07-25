@@ -4,15 +4,15 @@ const bcrypt = require("bcrypt");
 const userSchema = new Schema({
   username: {
     type: String,
-    required: true,
+    required: [true, "Please enter a username."],
     unique: true,
     trim: true,
-    minlength: 5,
-    maxLength: 16,
+    minlength: [5, "Your username must be at least 5 characters long."],
+    maxLength: [16, "Your username is too long."],
   },
   email: {
     type: String,
-    required: true,
+    required: [true, "Please enter an email."],
     unique: true,
     match: [
       /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/,
@@ -21,8 +21,8 @@ const userSchema = new Schema({
   },
   password: {
     type: String,
-    required: true,
-    minLength: 5,
+    required: [true, "Please enter a password."],
+    minLength: [5, "Your password must be at least 5 characters long."],
   },
   messages: [
     {

@@ -29,18 +29,14 @@ router.get("/:id", async ({ params }, res) => {
 });
 
 // create user
-router.post("/", async ({ body }, res) => {
+router.post("/", async ({ body }, res, next) => {
   try {
     const newUser = await User.create(body);
     const token = signToken(newUser);
-
-    const emailResponse = await sendEmail(body);
-
-    console.log(emailResponse);
+    await sendEmail(body);
     res.json({ newUser, token });
-  } catch (e) {
-    console.log(e);
-    res.status(500).json(e);
+  } catch (err) {
+    next(err);
   }
 });
 
@@ -48,13 +44,17 @@ router.post("/", async ({ body }, res) => {
 router.post("/login", async ({ body }, res) => {
   const user = await User.findOne({ username: body.username });
   if (!user) {
-    return res.status(400).json({ message: "User not found." });
+    return res
+      .status(400)
+      .json({ message: "Invalid username/password.", username: false });
   }
 
   const correctPw = await user.checkPassword(body.password);
 
   if (!correctPw) {
-    return res.status(400).json({ message: "Incorrect password." });
+    return res
+      .status(400)
+      .json({ message: "Invalid username/password.", password: false });
   }
 
   const token = signToken(user);
