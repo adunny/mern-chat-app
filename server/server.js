@@ -10,12 +10,14 @@ const app = express();
 const server = http.createServer(app);
 const PORT = process.env.port || 3001;
 const { checkUserArray } = require("./utils/checkUserArray");
+const errorMiddleware = require("./utils/errorMiddleware");
 
 // middleware
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(routes);
 app.use(cors());
+app.use(errorMiddleware);
 
 // websocket
 const io = new Server(server, {
