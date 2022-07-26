@@ -8,3 +8,13 @@ body {
 .card-bg {
   background-color: #e9efe7;
 }
+
+textarea {
+  resize: none;
+}
+
+.chatbox {
+  overflow-y: scroll;
+  height: 400px;
+  background-color: #e9efe7;
+}
