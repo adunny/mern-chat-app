@@ -5,6 +5,7 @@ const messageSchema = new Schema({
     type: String,
     required: true,
     minlength: 1,
+    maxlength: [180, "Max character limit: 180"],
   },
   createdAt: {
     type: Date,
