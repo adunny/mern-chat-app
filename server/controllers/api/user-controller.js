@@ -1,6 +1,6 @@
-const User = require("../models/User");
-const { signToken } = require("../utils/auth");
-const sendEmail = require("../utils/sendEmail");
+const User = require("../../models/User");
+const { signToken } = require("../../utils/auth");
+const sendEmail = require("../../utils/sendEmail");
 
 //TODO: better error handling/validation on most routes
 

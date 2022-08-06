@@ -4,7 +4,7 @@ const {
   createUser,
   login,
   deleteUser,
-} = require("../../controllers/user-controller");
+} = require("../../controllers/api/user-controller");
 
 const { authMiddleware } = require("../../utils/auth");
 

@@ -1,4 +1,4 @@
-const { User, Message } = require("../models");
+const { User, Message } = require("../../models");
 
 //TODO: better error handling/validation on most routes
 

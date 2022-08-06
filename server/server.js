@@ -8,9 +8,9 @@ const { Server } = require("socket.io");
 
 const app = express();
 const server = http.createServer(app);
-const PORT = process.env.port || 3001;
-const { checkUserArray } = require("./utils/checkUserArray");
+const PORT = process.env.PORT || 3001;
 const errorMiddleware = require("./utils/errorMiddleware");
+const rootSocket = require("./controllers/socket/rootSocket");
 
 // middleware
 app.use(express.urlencoded({ extended: false }));
@@ -25,42 +25,7 @@ const io = new Server(server, {
     origin: "http://localhost:3000",
   },
 });
-
-// TODO: move this stuff to a seperate file possibly
-const onlineUsers = [];
-io.on("connection", (socket) => {
-  socket.emit("online_users", onlineUsers);
-  socket.join("public_chat");
-  console.log(onlineUsers);
-
-  socket.on("user_connected", (user) => {
-    const userExists = checkUserArray(user, onlineUsers);
-    if (!userExists) {
-      onlineUsers.push({ user, id: socket.id });
-    }
-    socket.in("public_chat").emit("online_users", onlineUsers);
-    socket.emit("online_users", onlineUsers);
-    console.log(`${user} is now online.`);
-  });
-
-  socket.on("user_disconnected", (user) => {
-    const userExists = checkUserArray(user, onlineUsers);
-    // finds the user that disconnected and removes them from the array
-    if (userExists) {
-      onlineUsers.splice(
-        onlineUsers.findIndex((x) => x.user == user),
-        1
-      );
-    }
-    socket.emit("online_users", onlineUsers);
-    socket.in("public_chat").emit("online_users", onlineUsers);
-    console.log(`${user} is now offline.`);
-  });
-
-  socket.on("new_message", (message) => {
-    socket.in("public_chat").emit("received_message", message);
-  });
-});
+rootSocket(io);
 
 // mongodb connection
 mongoose.connect(

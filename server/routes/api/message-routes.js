@@ -4,7 +4,7 @@ const {
   getAllMessages,
   createMessage,
   deleteMessage,
-} = require("../../controllers/message-controller");
+} = require("../../controllers/api/message-controller");
 
 const { authMiddleware } = require("../../utils/auth");
 
