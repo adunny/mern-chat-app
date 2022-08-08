@@ -8,6 +8,8 @@
 ## Description
 Instant-messaging app built with MERN stack technologies
 
+[View the website here](https://globalchat0.herokuapp.com/)
+
   
 ## Table of Contents
 - [Description](#description)
