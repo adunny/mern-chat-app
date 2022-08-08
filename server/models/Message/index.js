@@ -10,6 +10,7 @@ const messageSchema = new Schema({
   createdAt: {
     type: Date,
     default: Date.now,
+    expires: "24h",
   },
   username: {
     type: String,
