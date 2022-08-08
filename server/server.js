@@ -20,8 +20,6 @@ app.use(routes);
 app.use(cors());
 app.use(errorMiddleware);
 
-console.log(process.env.JWT_SECRET);
-
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "../client/build")));
 
