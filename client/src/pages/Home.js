@@ -5,7 +5,9 @@ import { Row } from "react-bootstrap";
 import io from "socket.io-client";
 
 const Home = () => {
-  const socket = io.connect("http://localhost:3001");
+  const ENDPOINT =
+    "http://localhost:3001" || "https://globalchat0.herokuapp.com/";
+  const socket = io.connect(ENDPOINT);
   return (
     <Row>
       <UserPanel socket={socket} />

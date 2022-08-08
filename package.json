@@ -4,7 +4,9 @@
   "main": "index.js",
   "scripts": {
     "install": "concurrently \"cd server && yarn install\" \"cd client && yarn install\"",
-    "dev": "concurrently \"cd server && yarn start\" \"cd client && yarn start\""
+    "dev": "concurrently \"cd server && yarn dev\" \"cd client && yarn start\"",
+    "start": "cd server && yarn start",
+    "heroku-postbuild": "cd client && yarn build"
   },
   "repository": "git@github.com:adunny/mern-chat-app.git",
   "author": "alen <alen.dunn1@gmail.com>",
