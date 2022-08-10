@@ -7,6 +7,8 @@ const rootSocket = (io) => {
     console.log(onlineUsers);
 
     socket.on("user_connected", (user) => {
+      socket.currentUser = user;
+      console.log(socket.currentUser);
       const userExists = checkUserArray(user, onlineUsers);
       if (!userExists) {
         onlineUsers.push({ user, id: socket.id });
@@ -16,9 +18,22 @@ const rootSocket = (io) => {
       console.log(`${user} is now online.`);
     });
 
-    socket.on("user_disconnected", (user) => {
+    socket.on("disconnect", () => {
+      // if user closes browser/tab remove from online user list
+      const userExists = checkUserArray(socket.currentUser, onlineUsers);
+      if (userExists) {
+        onlineUsers.splice(
+          onlineUsers.findIndex((x) => x.user == socket.currentUser),
+          1
+        );
+      }
+      socket.emit("online_users", onlineUsers);
+      socket.in("public_chat").emit("online_users", onlineUsers);
+    });
+
+    socket.on("logout", (user) => {
+      // if user logs out remove them from online users
       const userExists = checkUserArray(user, onlineUsers);
-      // finds the user that disconnected and removes them from the array
       if (userExists) {
         onlineUsers.splice(
           onlineUsers.findIndex((x) => x.user == user),
