@@ -53,9 +53,11 @@ const Login = () => {
         {showError && <p className="text-danger fst-italic">{errMsg}</p>}
       </Form.Group>
 
-      <Button className="btn-secondary" type="submit">
-        Login
-      </Button>
+      <div className="pt-3">
+        <Button className="btn-secondary" type="submit">
+          Login
+        </Button>
+      </div>
     </Form>
   );
 };

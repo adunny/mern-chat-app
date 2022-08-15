@@ -76,7 +76,7 @@ const ChatPanel = ({ socket }) => {
 
   return (
     <Col sm={12} md={6}>
-      <h3>Chat Panel</h3>
+      <h3>Chat</h3>
       {loading && <Spinner animation="border" role="status" />}
       <div className="chatbox">
         {messages.map((msg) => (
