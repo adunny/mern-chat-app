@@ -109,9 +109,11 @@ const Signup = () => {
           <p className="text-danger fst-italic">{errorMsg.passwordMsg}</p>
         )}
       </Form.Group>
-      <Button className="btn-secondary" type="submit">
-        Signup
-      </Button>
+      <div className="pt-3">
+        <Button className="btn-secondary" type="submit">
+          Signup
+        </Button>
+      </div>
     </Form>
   );
 };

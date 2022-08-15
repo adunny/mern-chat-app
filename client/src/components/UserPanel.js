@@ -26,14 +26,15 @@ const UserPanel = ({ socket }) => {
 
   return (
     <Col sm={12} md={6}>
-      <h3>Userpanel</h3>
-      {Auth.loggedIn() && (
-        <Button className="btn-secondary" onClick={logOutHandler}>
-          Logout
-        </Button>
-      )}
       {/* User List */}
-      <h4>Online users</h4>
+      <h3>Online Users</h3>
+      {Auth.loggedIn() && (
+        <div className="pb-3">
+          <Button className="btn-secondary" onClick={logOutHandler}>
+            Logout
+          </Button>
+        </div>
+      )}
 
       <Card className="card-bg">
         <ListGroup variant="flush">
